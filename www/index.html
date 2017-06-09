@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<script src="libs/jquery-1.10.1.js"></script>
+<!-- Bootstrap -->
+<script src="libs/bootstrap/js/bootstrap.js"></script>
+<link href="libs/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="libs/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+
+<link rel="stylesheet" type="text/css" href="css/reset.css">
+<link rel="stylesheet" type="text/css" href="css/ie.css">
+<link rel="stylesheet" type="text/css" href="css/index.css">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+
+
+<head>
+    <title>Satellite Imagery Integration with Planet</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<span id="safe-ribbon"><a href="http://www.safe.com">Powered by FME</a></span>
+      <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+          <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+            <div class="brand"><span class="hidden-phone">FME Demos | Satellite Imagery Integration with Planet</div>
+            <div class="nav-collapse collapse">
+            <!-- <a href="https://knowledge.safe.com/articles/Samples_and_Demos/Point-Cloud-Data-Download-with-FME-Server" class="btn">
+                    View KC article
+                </a> -->
+                <a href="http://playground.fmeserver.com/demos/" class="btn">
+                    <img src="libs/server-icon.png"> View all Demos
+                </a>
+            <!--<a href="https://github.com/safesoftware/fmepedia-pointcloud" class="btn">
+              <img src="libs/github.png"> Fork GitHub
+            </a> -->
+            <a href="https://github.com/safesoftware/fmepedia-pointcloud/archive/master.zip" class="btn">
+              <i class="icon-download-alt"></i> Download Zip
+            </a> 
+          </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="container-fluid" id="mainwrapper">
+        <div class="row-fluid" id="maprow">
+            <div class="span4" id="request_form">
+                <h1>About This Demo</h1>
+                <div id="parameters">
+                    <div id='instructions'>
+                      <p>This map displays San Francisco transit data over a background map created using the latest satellite imagery from <a href="http://www.planet.com">Planet</a>. FME reads transit data from the <a href="https://www.sfmta.com/about-sfmta/reports/gtfs-transit-data">SFMTA website</a> and mosaics the most up-to-date imagery available for this area from the Planet Explorer program. The map is generated as a tile cache for zoom levels from 10 to 16, and <a href="http://leafletjs.com/">Leaflet</a> (a JavaScript library) is used for displaying the map.</p> 
+                      <p id="updatedDate"></p>
+                   
+                    </div>
+                </div>
+               
+            </div>
+
+            <div class="span8" id="map_canvas">
+    
+            <script src="./Leaflet/leaflet.js"></script>
+
+            <script type="text/javascript" src="https://s3-us-west-2.amazonaws.com/safe-scenarios/Planet/basemap/latest_update.json"></script>
+
+            <script>
+
+            var output = JSON.parse(jsonDate);
+            var lastUpdate =  "<i>Background map last updated on " + output.date + ".</i>";
+
+            document.getElementById('updatedDate').innerHTML = lastUpdate;            
+
+                var se  = L.tileLayer('https://s3-us-west-2.amazonaws.com/safe-scenarios/Planet/tiles/{z}/{x}/{y}.png')
+
+                var map = L.map('map_canvas', {
+                    center: [37.761, -122.4456],
+                    zoom: 11,
+                    layers: [se],
+                    maxZoom: 16,
+                    minZoom: 12,
+                    attribution: 'SMFTA and Planet data'
+                });     
+
+
+
+            </script>
+        </div>
+        </div>
+    </div>
